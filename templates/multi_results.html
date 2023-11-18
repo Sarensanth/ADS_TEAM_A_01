@@ -1,0 +1,55 @@
+<!-- multi_results.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .result-container {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .non-toxic {
+            background-color: #d4edda; /* Green background for non-toxic results */
+        }
+
+        .toxic {
+            background-color: #f8d7da; /* Red background for toxic results */
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h1 class="mb-4">Results</h1>
+
+        {% if results %}
+            {% for result in results %}
+                <div class="result-container {% if result['result'] == 'non-toxic' %}non-toxic{% else %}toxic{% endif %}">
+                    <p><strong>Type:</strong> {{ result['type'] }}</p>
+                    <p><strong>Input:</strong> <a href="{{ result['input'] }}" target="_blank">{{ result['input'] }}</a></p>
+                    <hr class="my-3">
+                    <p><strong>Result:</strong> {{ result['result'] }}</p>
+                    <hr class="my-3">
+                    <p><strong>Prediction:</strong> {{ result['prediction_df'] | safe }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No results to display.</p>
+        {% endif %}
+
+        <p>Go back to <a href="/">Home</a></p>
+    </div>
+
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
